@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Patient Intake Form — Massage Therapy</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sage: #7a8c6e;
+    --sage-light: #b8c9a8;
+    --sage-pale: #eef2ea;
+    --warm: #c9a87c;
+    --warm-light: #f5ead6;
+    --ink: #2c2c28;
+    --ink-mid: #5a5a52;
+    --ink-light: #9a9a8e;
+    --cream: #faf8f3;
+    --white: #ffffff;
+    --rule: #ddd9d0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  .page-wrap {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 48px 32px 80px;
+  }
+
+  /* HEADER */
+  .form-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    border-bottom: 1.5px solid var(--sage);
+    padding-bottom: 24px;
+    margin-bottom: 40px;
+    gap: 24px;
+  }
+  .form-header h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 2.6rem;
+    letter-spacing: -0.5px;
+    line-height: 1.1;
+    color: var(--ink);
+  }
+  .form-header h1 em {
+    font-style: italic;
+    color: var(--sage);
+  }
+  .form-header .meta {
+    font-size: 0.75rem;
+    color: var(--ink-light);
+    text-align: right;
+    line-height: 1.8;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .form-header .meta span {
+    display: block;
+  }
+
+  /* SECTION HEADERS */
+  .section {
+    margin-bottom: 36px;
+  }
+  .section-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+  }
+
+  /* FORM GRID */
+  .field-row {
+    display: grid;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .field-row.cols-2 { grid-template-columns: 1fr 1fr; }
+  .field-row.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .field-row.cols-1-2 { grid-template-columns: 1fr 2fr; }
+  .field-row.cols-2-1 { grid-template-columns: 2fr 1fr; }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .field label {
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-mid);
+    font-weight: 500;
+  }
+  .field input[type="text"],
+  .field input[type="date"],
+  .field input[type="email"],
+  .field input[type="tel"],
+  .field select,
+  .field textarea {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 10px 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 300;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+  }
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus {
+    border-color: var(--sage);
+  }
+  .field textarea {
+    resize: vertical;
+    min-height: 72px;
+    line-height: 1.5;
+  }
+  .field select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239a9a8e' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 32px;
+    cursor: pointer;
+  }
+
+  /* INLINE LINE FIELDS */
+  .line-field {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+  .line-field label {
+    font-size: 0.8rem;
+    color: var(--ink-mid);
+    white-space: nowrap;
+    font-weight: 400;
+  }
+  .line-field .line {
+    flex: 1;
+    border: none;
+    border-bottom: 1px solid var(--rule);
+    background: transparent;
+    padding: 2px 4px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 300;
+    color: var(--ink);
+    outline: none;
+  }
+  .line-field .line:focus { border-bottom-color: var(--sage); }
+
+  /* CHECKBOX GRIDS */
+  .checkbox-note {
+    font-size: 0.75rem;
+    color: var(--ink-light);
+    margin-bottom: 14px;
+    font-style: italic;
+  }
+  .check-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 8px 16px;
+    margin-bottom: 16px;
+  }
+  .check-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+  .check-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    cursor: pointer;
+    padding: 6px 8px;
+    border-radius: 4px;
+    transition: background 0.15s;
+  }
+  .check-item:hover { background: var(--sage-pale); }
+  .check-item input[type="checkbox"] {
+    width: 15px;
+    height: 15px;
+    margin-top: 1px;
+    accent-color: var(--sage);
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+  .check-item .check-label {
+    font-size: 0.82rem;
+    line-height: 1.35;
+    color: var(--ink);
+  }
+  .check-item .check-sub {
+    font-size: 0.7rem;
+    color: var(--ink-light);
+    display: block;
+  }
+
+  /* CATEGORY HEADERS within check grids */
+  .check-category {
+    grid-column: 1 / -1;
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--warm);
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid var(--warm-light);
+  }
+  .check-category:first-child { margin-top: 0; border-top: none; padding-top: 0; }
+
+  /* BODY DIAGRAM */
+  .body-diagram-wrap {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+  .body-diagram-wrap p {
+    font-size: 0.75rem;
+    color: var(--ink-light);
+    margin-bottom: 16px;
+    font-style: italic;
+  }
+  .body-figures {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    justify-items: center;
+  }
+  .body-figure {
+    text-align: center;
+  }
+  .body-figure figcaption {
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-top: 8px;
+  }
+  svg.body-svg {
+    width: 130px;
+    height: auto;
+    cursor: crosshair;
+  }
+  .body-svg .body-part {
+    fill: var(--sage-pale);
+    stroke: var(--sage-light);
+    stroke-width: 1;
+    transition: fill 0.15s;
+    cursor: pointer;
+  }
+  .body-svg .body-part:hover { fill: var(--sage-light); }
+  .body-svg .body-part.marked { fill: var(--warm); stroke: var(--warm); }
+  .body-svg .body-part.marked-sec { fill: #e8c49a; stroke: var(--warm); }
+
+  /* PAIN SCALE */
+  .pain-scale {
+    display: flex;
+    gap: 0;
+    margin: 8px 0 4px;
+  }
+  .pain-scale label {
+    flex: 1;
+    text-align: center;
+    cursor: pointer;
+  }
+  .pain-scale label input { display: none; }
+  .pain-scale label span {
+    display: block;
+    padding: 8px 0;
+    font-size: 0.8rem;
+    font-weight: 400;
+    border: 1px solid var(--rule);
+    margin-right: -1px;
+    color: var(--ink-mid);
+    transition: all 0.15s;
+  }
+  .pain-scale label:first-child span { border-radius: 4px 0 0 4px; }
+  .pain-scale label:last-child span { border-radius: 0 4px 4px 0; margin-right: 0; }
+  .pain-scale label input:checked + span {
+    background: var(--warm);
+    border-color: var(--warm);
+    color: white;
+    font-weight: 500;
+    z-index: 1;
+    position: relative;
+  }
+  .pain-scale-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.65rem;
+    color: var(--ink-light);
+    margin-bottom: 12px;
+    letter-spacing: 0.05em;
+  }
+
+  /* YES/NO ROWS */
+  .yn-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--rule);
+    gap: 16px;
+  }
+  .yn-row:last-child { border-bottom: none; }
+  .yn-question {
+    font-size: 0.82rem;
+    color: var(--ink);
+    flex: 1;
+    line-height: 1.4;
+  }
+  .yn-question .yn-sub {
+    display: block;
+    font-size: 0.72rem;
+    color: var(--ink-light);
+    margin-top: 2px;
+  }
+  .yn-btns {
+    display: flex;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+  .yn-btns label {
+    cursor: pointer;
+  }
+  .yn-btns label input { display: none; }
+  .yn-btns label span {
+    display: block;
+    padding: 4px 14px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    color: var(--ink-mid);
+    transition: all 0.15s;
+  }
+  .yn-btns label input:checked + span {
+    background: var(--sage);
+    border-color: var(--sage);
+    color: white;
+  }
+
+  /* CONSENT */
+  .consent-box {
+    background: var(--sage-pale);
+    border: 1px solid var(--sage-light);
+    border-radius: 6px;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+  }
+  .consent-box p {
+    font-size: 0.8rem;
+    line-height: 1.7;
+    color: var(--ink-mid);
+    margin-bottom: 10px;
+  }
+  .consent-box p:last-child { margin-bottom: 0; }
+  .consent-box strong { color: var(--ink); font-weight: 500; }
+
+  /* SIG AREA */
+  .sig-area {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 24px;
+  }
+  .sig-block {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .sig-block label {
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-mid);
+    font-weight: 500;
+  }
+  .sig-line {
+    border: none;
+    border-bottom: 1.5px solid var(--ink);
+    padding: 8px 0 4px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-style: italic;
+    color: var(--ink);
+    background: transparent;
+    outline: none;
+    width: 100%;
+  }
+
+  /* FOOTER */
+  .form-footer {
+    text-align: center;
+    margin-top: 48px;
+    padding-top: 20px;
+    border-top: 1px solid var(--rule);
+    font-size: 0.7rem;
+    color: var(--ink-light);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* PRINT BUTTON */
+  .print-bar {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    display: flex;
+    gap: 10px;
+    z-index: 100;
+  }
+  .print-btn {
+    background: var(--sage);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 12px 22px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(122,140,110,0.35);
+    transition: all 0.2s;
+  }
+  .print-btn:hover {
+    background: #6a7c5e;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(122,140,110,0.4);
+  }
+
+  /* INTAKE NOTE TAG */
+  .evidence-tag {
+    display: inline-block;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: var(--warm-light);
+    color: var(--warm);
+    border-radius: 2px;
+    padding: 2px 6px;
+    margin-left: 6px;
+    vertical-align: middle;
+    font-weight: 500;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid var(--rule);
+    margin: 28px 0;
+  }
+
+  .helper-text {
+    font-size: 0.72rem;
+    color: var(--ink-light);
+    font-style: italic;
+    margin-top: 4px;
+  }
+
+  @media (max-width: 600px) {
+    .field-row.cols-2,
+    .field-row.cols-3,
+    .field-row.cols-1-2,
+    .field-row.cols-2-1 { grid-template-columns: 1fr; }
+    .sig-area { grid-template-columns: 1fr; }
+    .form-header { grid-template-columns: 1fr; }
+    .form-header .meta { text-align: left; }
+    .check-grid.cols-3 { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media print {
+    .print-bar { display: none; }
+    body { background: white; }
+    .page-wrap { padding: 20px; }
+    .check-item:hover { background: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+
+  <!-- HEADER -->
+  <header class="form-header">
+    <div>
+      <h1>Patient <em>Intake</em> Form</h1>
+      <div style="font-size:0.8rem; color:var(--ink-light); margin-top:6px; font-style:italic;">Massage Therapy &amp; Bodywork</div>
+    </div>
+    <div class="meta">
+      <span>Date <input type="date" style="border:none;border-bottom:1px solid var(--rule);background:transparent;font-size:0.75rem;color:var(--ink);outline:none;font-family:'DM Sans',sans-serif;letter-spacing:0.04em;"></span>
+      <span style="margin-top:4px;">Chart # ____________</span>
+    </div>
+  </header>
+
+  <!-- SECTION 1: PERSONAL -->
+  <section class="section">
+    <div class="section-label">01 — Personal Information</div>
+
+    <div class="field-row cols-2">
+      <div class="field">
+        <label>First Name</label>
+        <input type="text">
+      </div>
+      <div class="field">
+        <label>Last Name</label>
+        <input type="text">
+      </div>
+    </div>
+
+    <div class="field-row cols-3">
+      <div class="field">
+        <label>Date of Birth</label>
+        <input type="date">
+      </div>
+      <div class="field">
+        <label>Sex / Gender Identity</label>
+        <select>
+          <option value="">— select —</option>
+          <option>Male</option>
+          <option>Female</option>
+          <option>Non-binary</option>
+          <option>Prefer not to say</option>
+          <option>Self-describe</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Occupation</label>
+        <input type="text">
+      </div>
+    </div>
+
+    <div class="field-row cols-2">
+      <div class="field">
+        <label>Phone</label>
+        <input type="tel">
+      </div>
+      <div class="field">
+        <label>Email</label>
+        <input type="email">
+      </div>
+    </div>
+
+    <div class="field-row cols-1">
+      <div class="field">
+        <label>Address</label>
+        <input type="text">
+      </div>
+    </div>
+
+    <div class="field-row cols-3">
+      <div class="field">
+        <label>City</label>
+        <input type="text">
+      </div>
+      <div class="field">
+        <label>State</label>
+        <input type="text">
+      </div>
+      <div class="field">
+        <label>ZIP</label>
+        <input type="text">
+      </div>
+    </div>
+
+    <div class="field-row cols-2">
+      <div class="field">
+        <label>Emergency Contact Name</label>
+        <input type="text">
+      </div>
+      <div class="field">
+        <label>Emergency Contact Phone</label>
+        <input type="tel">
+      </div>
+    </div>
+
+    <div class="field-row cols-2">
+      <div class="field">
+        <label>Referring Physician / Provider</label>
+        <input type="text">
+      </div>
+      <div class="field">
+        <label>Primary Care Physician</label>
+        <input type="text">
+      </div>
+    </div>
+
+    <div class="yn-row" style="border:1px solid var(--rule); border-radius:4px; padding:10px 14px; background:var(--white);">
+      <div class="yn-question">
+        Was massage therapy recommended or prescribed by a medical provider?
+        <span class="yn-sub">If yes, please note condition &amp; recommended technique below.</span>
+      </div>
+      <div class="yn-btns">
+        <label><input type="radio" name="prescribed"><span>Yes</span></label>
+        <label><input type="radio" name="prescribed"><span>No</span></label>
+      </div>
+    </div>
+    <div class="field" style="margin-top:10px;">
+      <label>If yes — condition &amp; recommended treatment</label>
+      <input type="text">
+    </div>
+
+  </section>
+
+  <hr class="divider">
+
+  <!-- SECTION 2: REASON FOR VISIT -->
+  <section class="section">
+    <div class="section-label">02 — Reason for Visit &amp; Goals</div>
+
+    <div class="field-row cols-1">
+      <div class="field">
+        <label>Primary reason for seeking massage today</label>
+        <textarea placeholder="Describe your main concern, complaint, or goal…"></textarea>
+      </div>
+    </div>
+
+    <div class="field-row cols-2">
+      <div class="field">
+        <label>How long have you had this concern?</label>
+        <select>
+          <option value="">— select —</option>
+          <option>Less than 1 week</option>
+          <option>1–4 weeks</option>
+          <option>1–3 months</option>
+          <option>3–6 months</option>
+          <option>6–12 months</option>
+          <option>1–3 years</option>
+          <option>More than 3 years</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>What is your primary goal for today?</label>
+        <select>
+          <option value="">— select —</option>
+          <option>Pain relief</option>
+          <option>Stress / anxiety reduction</option>
+          <option>Injury rehabilitation</option>
+          <option>Improve range of motion / flexibility</option>
+          <option>Post-surgical recovery</option>
+          <option>General wellness / maintenance</option>
+          <option>Sports performance / recovery</option>
+          <option>Lymphatic / immune support</option>
+          <option>Sleep improvement</option>
+          <option>Other</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- PAIN SCALE -->
+    <div class="field" style="margin-bottom:18px;">
+      <label>Current pain / discomfort level (at rest)</label>
+      <div style="margin-top:8px;">
+        <div class="pain-scale">
+          <label><input type="radio" name="pain_rest" value="0"><span>0</span></label>
+          <label><input type="radio" name="pain_rest" value="1"><span>1</span></label>
+          <label><input type="radio" name="pain_rest" value="2"><span>2</span></label>
+          <label><input type="radio" name="pain_rest" value="3"><span>3</span></label>
+          <label><input type="radio" name="pain_rest" value="4"><span>4</span></label>
+          <label><input type="radio" name="pain_rest" value="5"><span>5</span></label>
+          <label><input type="radio" name="pain_rest" value="6"><span>6</span></label>
+          <label><input type="radio" name="pain_rest" value="7"><span>7</span></label>
+          <label><input type="radio" name="pain_rest" value="8"><span>8</span></label>
+          <label><input type="radio" name="pain_rest" value="9"><span>9</span></label>
+          <label><input type="radio" name="pain_rest" value="10"><span>10</span></label>
+        </div>
+        <div class="pain-scale-labels">
+          <span>0 — None</span>
+          <span>5 — Moderate</span>
+          <span>10 — Severe</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="field" style="margin-bottom:18px;">
+      <label>Current pain / discomfort level (with movement or activity)</label>
+      <div style="margin-top:8px;">
+        <div class="pain-scale">
+          <label><input type="radio" name="pain_move" value="0"><span>0</span></label>
+          <label><input type="radio" name="pain_move" value="1"><span>1</span></label>
+          <label><input type="radio" name="pain_move" value="2"><span>2</span></label>
+          <label><input type="radio" name="pain_move" value="3"><span>3</span></label>
+          <label><input type="radio" name="pain_move" value="4"><span>4</span></label>
+          <label><input type="radio" name="pain_move" value="5"><span>5</span></label>
+          <label><input type="radio" name="pain_move" value="6"><span>6</span></label>
+          <label><input type="radio" name="pain_move" value="7"><span>7</span></label>
+          <label><input type="radio" name="pain_move" value="8"><span>8</span></label>
+          <label><input type="radio" name="pain_move" value="9"><span>9</span></label>
+          <label><input type="radio" name="pain_move" value="10"><span>10</span></label>
+        </div>
+        <div class="pain-scale-labels">
+          <span>0 — None</span>
+          <span>5 — Moderate</span>
+          <span>10 — Severe</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>What makes the pain / tension better or worse?</label>
+      <textarea placeholder="e.g. worse with sitting, better with heat, worse in morning…" style="min-height:56px;"></textarea>
+    </div>
+
+  </section>
+
+  <hr class="divider">
+
+  <!-- SECTION 3: BODY DIAGRAM + AREAS OF CONCERN -->
+  <section class="section">
+    <div class="section-label">03 — Areas of Concern</div>
+    <p class="checkbox-note">Check all areas where you experience pain, tension, numbness, tingling, or discomfort.</p>
+
+    <div class="check-grid cols-3">
+
+      <div class="check-category">Head &amp; Neck</div>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Scalp / Head</span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Forehead / Temples</span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Jaw / TMJ <span class="check-sub">clicking, tightness, pain</span></span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Neck — Front <span class="check-sub">SCM, scalene</span></span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Neck — Back / Base <span class="check-sub">suboccipitals</span></span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Throat / Hyoid</span></label>
+
+      <div class="check-category">Shoulder &amp; Upper Back</div>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Upper Trapezius <span class="check-sub">between neck &amp; shoulder</span></span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Shoulder Joint <span class="check-sub">rotator cuff area</span></span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Shoulder Blade / Rhomboids</span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Upper Back — Left</span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Upper Back — Right</span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Thoracic Spine <span class="check-sub">mid spine</span></span></label>
+
+      <div class="check-category">Arm &amp; Hand</div>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Upper Arm — Left</span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Upper Arm — Right</span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Elbow — Left</span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Elbow — Right</span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Forearm — Left</span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Forearm — Right</span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Wrist — Left</span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Wrist — Right</span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Hand / Fingers <span class="check-sub">numbness, tingling</span></span></label>
+
+      <div class="check-category">Chest &amp; Abdomen</div>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Chest / Pectorals</span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Ribs / Intercostals</span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Abdomen <span class="check-sub">digestive, tension</span></span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Diaphragm <span class="check-sub">breathing restriction</span></span></label>
+
+      <div class="check-category">Lower Back, Hip &amp; Pelvis</div>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Lumbar Spine <span class="check-sub">lower back</span></span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Quadratus Lumborum <span class="check-sub">deep low back sides</span></span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Sacrum / Tailbone</span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">SI Joint <span class="check-sub">sacroiliac</span></span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Hip — Left</span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Hip — Right</span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Glutes / Piriformis</span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">IT Band <span class="check-sub">outer thigh</span></span></label>
+
+      <div class="check-category">Leg &amp; Foot</div>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Quadriceps — Left</span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Quadriceps — Right</span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Hamstrings — Left</span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Hamstrings — Right</span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Knee — Left</span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Knee — Right</span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Calf / Gastrocnemius</span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Shin / Tibialis</span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Ankle — Left</span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Ankle — Right</span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Plantar Fascia <span class="check-sub">arch / heel pain</span></span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Toes / Foot Top</span></label>
+
+    </div>
+
+    <div class="field" style="margin-top:12px;">
+      <label>Additional notes on location, character, or pattern of pain / tension</label>
+      <textarea placeholder="e.g. radiates down left arm, pain wraps around from low back to front hip, sharp vs dull…" style="min-height:56px;"></textarea>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- SECTION 4: SYMPTOM / CONDITION CHECKLIST -->
+  <section class="section">
+    <div class="section-label">04 — Health Conditions &amp; Symptoms</div>
+    <p class="checkbox-note">Check any conditions you currently have or have experienced. This allows us to tailor your session using evidence-based techniques. <span style="color:var(--warm);">★ = condition for which massage is clinically prescribed in Germany, Russia, Japan, or China.</span></p>
+
+    <div class="check-grid">
+
+      <div class="check-category">Musculoskeletal</div>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Chronic low back pain <span class="check-sub evidence-tag">★ DE · RU · CN</span></span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Neck pain / stiffness <span class="check-sub evidence-tag">★ JP · CN · DE</span></span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Shoulder pain / rotator cuff <span class="check-sub evidence-tag">★ RU</span></span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Osteoarthritis — knee <span class="check-sub evidence-tag">★ US · CN</span></span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Osteoarthritis — hip / other <span class="check-sub evidence-tag">★ DE · RU</span></span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Fibromyalgia <span class="check-sub evidence-tag">★ US · DE</span></span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Carpal tunnel syndrome <span class="check-sub evidence-tag">★ RU · CN</span></span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">TMJ disorder <span class="check-sub evidence-tag">★ RU · US</span></span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Plantar fasciitis</span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Scoliosis / spinal curvature</span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Herniated / bulging disc</span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Sciatica / radiculopathy <span class="check-sub evidence-tag">★ RU · CN</span></span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Sports injury (recent or chronic)</span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Post-surgical recovery <span class="check-sub evidence-tag">★ DE · RU · NO</span></span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Tendonitis / bursitis <span class="check-sub evidence-tag">★ RU</span></span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Muscle cramps / spasms</span></label>
+
+      <div class="check-category">Neurological</div>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Tension-type headaches <span class="check-sub evidence-tag">★ US · JP</span></span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Migraines <span class="check-sub evidence-tag">★ US</span></span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Cervicogenic headaches</span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Neuropathy / nerve pain</span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Multiple sclerosis <span class="check-sub evidence-tag">★ US</span></span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Post-stroke rehabilitation <span class="check-sub evidence-tag">★ RU · CN</span></span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Parkinson's disease <span class="check-sub evidence-tag">★ RU</span></span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Numbness / tingling in limbs</span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Balance / coordination issues</span></label>
+
+      <div class="check-category">Cardiovascular &amp; Lymphatic</div>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Hypertension <span class="check-sub evidence-tag">★ RU · CN</span></span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Poor circulation / cold extremities</span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Lymphedema <span class="check-sub evidence-tag">★ DE</span></span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Post-mastectomy / post-surgical swelling <span class="check-sub evidence-tag">★ DE</span></span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Varicose veins <span class="check-sub">avoid direct pressure</span></span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">History of blood clots / DVT <span class="check-sub">please disclose</span></span></label>
+
+      <div class="check-category">Mental Health &amp; Sleep</div>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Anxiety <span class="check-sub evidence-tag">★ US · JP · DE</span></span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Depression <span class="check-sub evidence-tag">★ US · JP · CN</span></span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Insomnia / sleep disruption <span class="check-sub evidence-tag">★ CN · JP · RU</span></span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">PTSD / trauma history</span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Stress / burnout</span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Fatigue / low energy</span></label>
+
+      <div class="check-category">Respiratory &amp; Digestive</div>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Asthma <span class="check-sub evidence-tag">★ RU</span></span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Chronic bronchitis / COPD</span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Constipation <span class="check-sub evidence-tag">★ JP · RU · CN</span></span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">IBS / spastic colon <span class="check-sub evidence-tag">★ RU · JP</span></span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Gastritis / acid reflux <span class="check-sub evidence-tag">★ RU</span></span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Crohn's disease <span class="check-sub evidence-tag">★ RU</span></span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Bloating / abdominal tension</span></label>
+
+      <div class="check-category">Oncology &amp; Immune</div>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Active cancer treatment <span class="check-sub">oncology massage available</span></span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Cancer — in remission <span class="check-sub evidence-tag">★ US</span></span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">HIV / AIDS <span class="check-sub evidence-tag">★ US</span></span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Autoimmune condition <span class="check-sub evidence-tag">★ RU</span></span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Diabetes</span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Chronic fatigue syndrome</span></label>
+
+      <div class="check-category">Reproductive &amp; Hormonal</div>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Pregnancy <span class="check-sub">please note trimester</span></span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Postpartum</span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Gynecological discomfort <span class="check-sub evidence-tag">★ JP</span></span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Endometriosis / PCOS</span></label>
+      <label class="check-item"><input type="checkbox"><span class="check-label">Menopause / hormonal changes</span></label>
+
+    </div>
+
+    <div class="field" style="margin-top:12px;">
+      <label>Other conditions, diagnoses, or concerns not listed above</label>
+      <textarea placeholder="Please describe…" style="min-height:56px;"></textarea>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- SECTION 5: HEALTH HISTORY -->
+  <section class="section">
+    <div class="section-label">05 — Medical History &amp; Safety</div>
+
+    <div class="yn-row">
+      <div class="yn-question">Are you currently pregnant?</div>
+      <div class="yn-btns">
+        <label><input type="radio" name="preg"><span>Yes</span></label>
+        <label><input type="radio" name="preg"><span>No</span></label>
+      </div>
+    </div>
+    <div class="yn-row">
+      <div class="yn-question">Have you had any surgeries in the past 12 months?<span class="yn-sub">If yes, please describe below.</span></div>
+      <div class="yn-btns">
+        <label><input type="radio" name="surg"><span>Yes</span></label>
+        <label><input type="radio" name="surg"><span>No</span></label>
+      </div>
+    </div>
+    <div class="yn-row">
+      <div class="yn-question">Do you have any implants, prosthetics, or medical devices?<span class="yn-sub">Pacemaker, joint replacement, breast implants, insulin pump, etc.</span></div>
+      <div class="yn-btns">
+        <label><input type="radio" name="implant"><span>Yes</span></label>
+        <label><input type="radio" name="implant"><span>No</span></label>
+      </div>
+    </div>
+    <div class="yn-row">
+      <div class="yn-question">Do you have any skin conditions, rashes, open wounds, or bruising?</div>
+      <div class="yn-btns">
+        <label><input type="radio" name="skin"><span>Yes</span></label>
+        <label><input type="radio" name="skin"><span>No</span></label>
+      </div>
+    </div>
+    <div class="yn-row">
+      <div class="yn-question">Have you ever experienced an adverse reaction to massage?</div>
+      <div class="yn-btns">
+        <label><input type="radio" name="adverse"><span>Yes</span></label>
+        <label><input type="radio" name="adverse"><span>No</span></label>
+      </div>
+    </div>
+    <div class="yn-row">
+      <div class="yn-question">Do you have a history of trauma, abuse, or PTSD that may affect your comfort during bodywork?</div>
+      <div class="yn-btns">
+        <label><input type="radio" name="trauma"><span>Yes</span></label>
+        <label><input type="radio" name="trauma"><span>No</span></label>
+        <label><input type="radio" name="trauma"><span>Prefer not to say</span></label>
+      </div>
+    </div>
+
+    <div class="field" style="margin-top:14px;">
+      <label>Current medications (include topicals, blood thinners, steroids, muscle relaxants)</label>
+      <textarea placeholder="List medications and dosage if relevant…" style="min-height:56px;"></textarea>
+    </div>
+
+    <div class="field" style="margin-top:10px;">
+      <label>Known allergies (latex, oils, lotions, fragrances, nuts)</label>
+      <textarea placeholder="List any allergies or sensitivities…" style="min-height:48px;"></textarea>
+    </div>
+
+    <div class="field" style="margin-top:10px;">
+      <label>Surgical / medical history relevant to today's session</label>
+      <textarea placeholder="Surgeries, fractures, significant injuries, diagnoses…" style="min-height:56px;"></textarea>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- SECTION 6: MASSAGE HISTORY & PREFERENCES -->
+  <section class="section">
+    <div class="section-label">06 — Massage History &amp; Session Preferences</div>
+
+    <div class="field-row cols-2">
+      <div class="field">
+        <label>Have you received massage before?</label>
+        <select>
+          <option value="">— select —</option>
+          <option>Yes — regularly</option>
+          <option>Yes — occasionally</option>
+          <option>Yes — once or twice</option>
+          <option>No — first time</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>When was your last massage session?</label>
+        <select>
+          <option value="">— select —</option>
+          <option>Within the past week</option>
+          <option>1–4 weeks ago</option>
+          <option>1–3 months ago</option>
+          <option>3–12 months ago</option>
+          <option>More than 1 year ago</option>
+          <option>Never</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field-row cols-1">
+      <div class="field">
+        <label>Types of massage you have received or are interested in</label>
+        <div class="check-grid cols-3" style="margin-top:6px;">
+          <label class="check-item"><input type="checkbox"><span class="check-label">Swedish (relaxation)</span></label>
+          <label class="check-item"><input type="checkbox"><span class="check-label">Deep Tissue</span></label>
+          <label class="check-item"><input type="checkbox"><span class="check-label">Myofascial Release</span></label>
+          <label class="check-item"><input type="checkbox"><span class="check-label">Trigger Point Therapy</span></label>
+          <label class="check-item"><input type="checkbox"><span class="check-label">Sports Massage</span></label>
+          <label class="check-item"><input type="checkbox"><span class="check-label">Neuromuscular Therapy</span></label>
+          <label class="check-item"><input type="checkbox"><span class="check-label">Shiatsu / Acupressure</span></label>
+          <label class="check-item"><input type="checkbox"><span class="check-label">Tui Na</span></label>
+          <label class="check-item"><input type="checkbox"><span class="check-label">Lymphatic Drainage</span></label>
+          <label class="check-item"><input type="checkbox"><span class="check-label">Prenatal Massage</span></label>
+          <label class="check-item"><input type="checkbox"><span class="check-label">Oncology Massage</span></label>
+          <label class="check-item"><input type="checkbox"><span class="check-label">Hot Stone</span></label>
+          <label class="check-item"><input type="checkbox"><span class="check-label">Cupping</span></label>
+          <label class="check-item"><input type="checkbox"><span class="check-label">Reflexology</span></label>
+          <label class="check-item"><input type="checkbox"><span class="check-label">Not sure — therapist's recommendation</span></label>
+        </div>
+      </div>
+    </div>
+
+    <div class="field-row cols-2">
+      <div class="field">
+        <label>Preferred pressure today</label>
+        <select>
+          <option value="">— select —</option>
+          <option>Light / gentle</option>
+          <option>Light-to-medium</option>
+          <option>Medium</option>
+          <option>Medium-to-firm</option>
+          <option>Firm / deep</option>
+          <option>As needed per area</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Session focus preference</label>
+        <select>
+          <option value="">— select —</option>
+          <option>Full body</option>
+          <option>Focus on specific areas only</option>
+          <option>Upper body</option>
+          <option>Lower body</option>
+          <option>Back &amp; neck only</option>
+          <option>Therapist's discretion</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field-row cols-2">
+      <div class="field">
+        <label>Areas to avoid or approach with extra care</label>
+        <textarea placeholder="e.g. avoid abdomen, be gentle on left knee, no face work…" style="min-height:56px;"></textarea>
+      </div>
+      <div class="field">
+        <label>Any preferences regarding draping, music, scent, or room temperature?</label>
+        <textarea placeholder="e.g. prefer unscented lotion, silence, cooler room…" style="min-height:56px;"></textarea>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Anything else you would like your therapist to know?</label>
+      <textarea placeholder="Additional context, goals, concerns, or requests for today's session…"></textarea>
+    </div>
+
+  </section>
+
+  <hr class="divider">
+
+  <!-- SECTION 7: CONSENT -->
+  <section class="section">
+    <div class="section-label">07 — Informed Consent</div>
+
+    <div class="consent-box">
+      <p><strong>Scope of Practice.</strong> Massage therapy is provided for the purposes of relaxation, stress reduction, relief of muscular tension, and general wellness. Massage therapists do not diagnose medical conditions, prescribe treatments, or practice medicine. The information shared on this form is used solely to tailor your session safely.</p>
+      <p><strong>Voluntary Participation.</strong> You have the right to end your session or refuse any technique at any time, for any reason, without explanation. Your comfort and safety are the highest priority.</p>
+      <p><strong>Informed Disclosure.</strong> You are encouraged to communicate openly about pressure, positioning, pain, or discomfort during your session. It is your responsibility to disclose all relevant health information, including conditions, medications, and recent procedures.</p>
+      <p><strong>Possible Effects.</strong> Some soreness, fatigue, or emotional release may occur after a session, particularly with deeper work. These are generally transient. Please hydrate well and rest as needed.</p>
+      <p><strong>Privacy.</strong> All information shared on this form is kept confidential and will not be shared without your written consent, except as required by law.</p>
+      <p><strong>Minors.</strong> Clients under 18 years of age must have written consent from a parent or legal guardian, who must remain on-site during the session.</p>
+    </div>
+
+    <div class="yn-row">
+      <div class="yn-question">I have read, understood, and agree to the informed consent statement above.</div>
+      <div class="yn-btns">
+        <label><input type="radio" name="consent_agree"><span>I Agree</span></label>
+      </div>
+    </div>
+    <div class="yn-row">
+      <div class="yn-question">I confirm that the health information I have provided is accurate and complete to the best of my knowledge.</div>
+      <div class="yn-btns">
+        <label><input type="radio" name="consent_confirm"><span>I Confirm</span></label>
+      </div>
+    </div>
+    <div class="yn-row">
+      <div class="yn-question">I consent to receive massage therapy and understand I may stop the session at any time.</div>
+      <div class="yn-btns">
+        <label><input type="radio" name="consent_rx"><span>I Consent</span></label>
+      </div>
+    </div>
+
+    <div class="sig-area">
+      <div class="sig-block">
+        <label>Patient / Client Signature</label>
+        <input class="sig-line" type="text" placeholder="Sign here">
+      </div>
+      <div class="sig-block">
+        <label>Date</label>
+        <input class="sig-line" type="date">
+      </div>
+    </div>
+
+    <div class="sig-area" style="margin-top:20px;">
+      <div class="sig-block">
+        <label>Parent / Guardian Signature (if client under 18)</label>
+        <input class="sig-line" type="text" placeholder="Sign here if applicable">
+      </div>
+      <div class="sig-block">
+        <label>Relationship to Client</label>
+        <input class="sig-line" type="text" placeholder="">
+      </div>
+    </div>
+
+  </section>
+
+  <!-- OFFICE USE -->
+  <section class="section" style="margin-top:32px;">
+    <div class="section-label">Therapist Notes — Office Use Only</div>
+    <div class="field">
+      <textarea placeholder="Assessment, session notes, technique selected, follow-up…" style="min-height:100px; background:#f9f7f2;"></textarea>
+    </div>
+    <div class="field-row cols-3" style="margin-top:12px;">
+      <div class="field">
+        <label>Therapist Name</label>
+        <input type="text">
+      </div>
+      <div class="field">
+        <label>Session Length</label>
+        <select>
+          <option>30 min</option>
+          <option>60 min</option>
+          <option>75 min</option>
+          <option>90 min</option>
+          <option>120 min</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Primary Technique Used</label>
+        <input type="text">
+      </div>
+    </div>
+  </section>
+
+  <footer class="form-footer">
+    <p>Confidential Patient Record &nbsp;·&nbsp; Massage Therapy Intake Form &nbsp;·&nbsp; Please retain a copy for your records</p>
+  </footer>
+
+</div>
+
+<!-- PRINT BUTTON -->
+<div class="print-bar">
+  <button class="print-btn" onclick="window.print()">🖨 Print / Save PDF</button>
+</div>
+
+</body>
+</html>
